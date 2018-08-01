@@ -4,8 +4,8 @@
         <el-form-item label="账号" prop="account">
             <el-input type="text" v-model="ruleForm.account" clearable auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="密码" prop="pwd">
-            <el-input type="password" v-model="ruleForm.pwd" clearable auto-complete="off"></el-input>
+        <el-form-item label="密码" prop="password">
+            <el-input type="password" v-model="ruleForm.password" clearable auto-complete="off"></el-input>
         </el-form-item>
 
         <el-form-item>
@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import { loginByAccount } from '@/api/login'
 
 export default {
   name: 'Login',
@@ -41,13 +40,13 @@ export default {
     return {
       ruleForm: {
         account: '',
-        pwd: ''
+        password: ''
       },
       rules: {
         account: [
           { validator: validatePassAccount, trigger: 'blur' }
         ],
-        pwd: [
+        password: [
           { validator: validatePassPassword, trigger: 'blur' }
         ]
       }
@@ -59,9 +58,12 @@ export default {
     login (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          loginByAccount(this.ruleForm.account, this.ruleForm.pwd).then((data) => {
+          this.$store.dispatch('loginByAccount', this.ruleForm).then((data) => {
+            this.$router.push({ path: '/home' })
             console.log(data)
             this.lastname = data['username']
+            const token = this.$store.getters.token
+            console.log('token:' + token)
           })
         } else {
           console.log('error submit!!')
@@ -70,7 +72,7 @@ export default {
       })
     },
     register (formName) {
-      this.$refs[formName].resetFields()
+      this.$router.push({ path: '/register' })
     }
   }
 }

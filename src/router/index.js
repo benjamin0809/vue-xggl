@@ -4,7 +4,8 @@ import HelloWorld from '@/components/HelloWorld'
 import Foo from '@/components/Foo'
 import Bar from '@/components/Bar'
 import Login from '@/components/login/login'
-
+import Register from '@/components/login/register'
+import Home from '@/components/home'
 Vue.use(Router)
 
 export default new Router({
@@ -26,6 +27,14 @@ export default new Router({
     { path: '/login',
       name: 'Login',
       component: Login
+    },
+    { path: '/register',
+      name: 'Register',
+      component: Register
+    },
+    { path: '/home',
+      name: 'Home',
+      component: Home
     }
   ]
 })
